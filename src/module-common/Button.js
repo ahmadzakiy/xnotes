@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import styled, { css } from "styled-components";
-import PropsTypes from "prop-types";
+import PropTypes from "prop-types";
 
 export const Color = {
-  primary: { background: "blue", border: "blue", font: "white" },
+  primary: { background: "#179FF3", border: "#179FF3", font: "white" },
   secondary: { background: "gray", border: "gray", font: "white" },
   success: { background: "green", border: "green", font: "white" },
   warning: { background: "orange", border: "orange", font: "white" },
@@ -12,17 +12,17 @@ export const Color = {
 };
 
 export const Size = {
-  large: { height: 34, padding: 16, font: 1 },
-  medium: { height: 24, padding: 8, font: 0.9 },
-  small: { height: 20, padding: 6, font: 0.8 }
+  large: { padding: 22, font: 18 },
+  medium: { padding: 18, font: 14 },
+  small: { padding: 10, font: 10 }
 };
 
 export default class Button extends Component {
-  static propsTypes = {
-    text: PropsTypes.string,
-    width: PropsTypes.number,
-    size: PropsTypes.oneOf(["large", "medium", "small"]),
-    color: PropsTypes.oneOf([
+  static propTypes = {
+    text: PropTypes.string,
+    width: PropTypes.number,
+    size: PropTypes.oneOf(["large", "medium", "small"]),
+    color: PropTypes.oneOf([
       "primary",
       "secondary",
       "success",
@@ -30,7 +30,7 @@ export default class Button extends Component {
       "danger",
       "transparent"
     ]),
-    onClick: PropsTypes.func
+    onClick: PropTypes.func
   };
 
   static defaultProps = {
@@ -53,15 +53,14 @@ const Wrapper = styled.button`
   border: none;
   transition: 0.3s;
   cursor: pointer;
-  border-radius: 4px;
+  border-radius: 22px;
   white-space: nowrap;
   user-select: none;
-  margin: 2px;
+  margin: 4px;
   &:focus {
     outline: none;
   }
   &:hover {
-    opacity: 0.7;
     background: transparent;
     ${props => css`
       color: ${Color[props.color].border};
@@ -74,9 +73,8 @@ const Wrapper = styled.button`
     `};
 
   ${props => css`
-    height: ${Size[props.size].height}px;
-    font-size: ${Size[props.size].font}rem;
-    padding: 0 ${Size[props.size].padding}px;
+    font-size: ${Size[props.size].font}px;
+    padding: 4px ${Size[props.size].padding}px;
     color: ${Color[props.color].font};
     background-color: ${Color[props.color].background};
     border: 1px solid ${Color[props.color].border};
