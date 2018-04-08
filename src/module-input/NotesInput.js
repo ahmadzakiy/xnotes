@@ -15,13 +15,13 @@ export default class NotesInput extends Component {
     newNotes: []
   };
   render() {
-    const { name } = this.props;
     return (
       <Wrapper>
         <NoteInputBox>
           <TextArea
-            placeholder={`What's on your mind, ${name} ?`}
+            placeholder={"What's on your mind ?"}
             value={this.state.value}
+            onClick={() => this.handleAddNote()}
             onChange={text => {
               this.setState({
                 value: text

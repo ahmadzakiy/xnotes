@@ -8,7 +8,7 @@ import { arrayMove } from "react-sortable-hoc";
 export default class App extends Component {
   state = {
     key: "modernlifeiswar",
-    name: "Zakiy",
+    name: "john doe",
     notes: []
   };
 
@@ -20,19 +20,19 @@ export default class App extends Component {
   render() {
     const { name, notes } = this.state;
     const currentDate = moment();
-    console.log("STATE DATA", notes);
+    //console.log("STATE DATA", notes);
 
     return (
       <Wrapper>
         <Welcome>
-          {`Good ${this.getGreetings(
-            currentDate
-          )} ${name}, its ${currentDate.format(
-            "dddd, MMMM DD"
+          {`Good ${this.getGreetings(currentDate)}, its ${currentDate.format(
+            "dddd, D MMMM "
           )}. Stay awesome!`}
         </Welcome>
         <NotesInput name={name} callbackInput={input => this.onAddNew(input)} />
-        <PrevNotes>What's on your thoughts yesterday</PrevNotes>
+        {notes.length !== 0 ? (
+          <PrevNotes>What's on your thoughts</PrevNotes>
+        ) : null}
         <NotesCard
           data={notes}
           onSortEnd={this.onSortEnd}
@@ -50,7 +50,7 @@ export default class App extends Component {
     // chrome.storage.sync.get(keyStore, result => {
     //   if (!chrome.runtime.error) {
     //     let data = JSON.parse(result[keyStore]);
-    //     console.log("GET DATA", data);
+    //     //console.log("GET DATA", data);
     //     this.setState({
     //       notes: data
     //     });
@@ -63,7 +63,7 @@ export default class App extends Component {
     obj[keyStore] = JSON.stringify(data);
     /* eslint-disable no-undef */
     // chrome.storage.sync.set(obj, () => {
-    //   console.log("UPDATE DATA", obj);
+    //   //console.log("UPDATE DATA", obj);
     //   if (chrome.runtime.error) {
     //     console.log("Runtime error.");
     //   }
@@ -148,6 +148,7 @@ const Welcome = styled.div`
   padding: 10px 20px;
   margin-top: 10px;
   color: #bebebe;
+  font-size: 16px;
 `;
 
 const PrevNotes = styled.div`

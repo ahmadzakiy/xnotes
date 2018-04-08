@@ -9,7 +9,8 @@ export default class TextArea extends Component {
     fontSize: PropTypes.number,
     borderRadius: PropTypes.number,
     value: PropTypes.string,
-    onChange: PropTypes.func
+    onChange: PropTypes.func,
+    onClick: PropTypes.func
   };
 
   static defaultProps = {
@@ -29,13 +30,20 @@ export default class TextArea extends Component {
         fontSize={fontSize}
         borderRadius={borderRadius}
         onChange={this.onChange}
-        autoFocus
+        onKeyDown={this.onEnterPress}
       />
     );
   }
   onChange = event => {
     const onChange = this.props.onChange;
     if (onChange) onChange(event.target.value);
+  };
+
+  onEnterPress = e => {
+    if (e.keyCode === 13 && e.shiftKey === false) {
+      e.preventDefault();
+      this.props.onClick();
+    }
   };
 }
 
@@ -47,10 +55,12 @@ const TextareaRow = styled.textarea`
   ${props => props.width && `width: ${props.width}px`};
   ${props => props.fontSize && `font-size: ${props.fontSize}px`};
   line-height: 20px;
-  box-shadow: 10px 10px 53px 11px rgba(206, 205, 205, 0.5);
-  background: #ffffff;
-  border: none;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: #f7f7f7;
+  box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.1);
+  transition: 0.3s;
   &:focus {
     outline: none;
+    background: #ffffff;
   }
 `;

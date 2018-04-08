@@ -8,3 +8,11 @@ An app to write notes on chrome new tab
 npm install
 npm start
 ```
+
+## BUILD CHROME EXTENSION
+
+```
+uncommend chrome.storage function at app.js
+npm run build
+load build folder from chrome browser
+```

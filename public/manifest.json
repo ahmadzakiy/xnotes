@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "version": "1.0.0",
-  "name": "xNotes - an app to write notes on chrome new tab",
+  "name": "xNotes",
   "short_name": "xNotes",
   "description": "An app to write notes on chrome new tab.",
   "homepage_url": "https://github.com/ahmadzakiy/xnotes",

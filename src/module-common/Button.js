@@ -7,7 +7,7 @@ export const Color = {
   secondary: { background: "gray", border: "gray", font: "white" },
   success: { background: "green", border: "green", font: "white" },
   warning: { background: "orange", border: "orange", font: "white" },
-  danger: { background: "red", border: "red", font: "white" },
+  danger: { background: "#ff4e4e", border: "#ff4e4e", font: "white" },
   transparent: { background: "transparent", border: "black", font: "black" }
 };
 
@@ -57,6 +57,7 @@ const Wrapper = styled.button`
   white-space: nowrap;
   user-select: none;
   margin: 4px;
+  box-shadow: 0px 3px 2px 0px rgba(0, 0, 0, 0.1);
   &:focus {
     outline: none;
   }
