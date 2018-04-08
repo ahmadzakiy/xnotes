@@ -1,6 +1,6 @@
-# xnotes v.0.1.0
+# xNotes v.1.0.0
 
-Notes for Chrome Extension
+An app to write notes on chrome new tab
 
 ## Getting Started
 

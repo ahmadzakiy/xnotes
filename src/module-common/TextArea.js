@@ -19,14 +19,7 @@ export default class TextArea extends Component {
   };
 
   render() {
-    const {
-      placeholder,
-      width,
-      fontSize,
-      borderRadius,
-      value,
-      onChange
-    } = this.props;
+    const { placeholder, width, fontSize, borderRadius, value } = this.props;
     return (
       <TextareaRow
         placeholder={placeholder}
@@ -47,6 +40,7 @@ export default class TextArea extends Component {
 }
 
 const TextareaRow = styled.textarea`
+  font-family: "Noto Sans", sans-serif;
   padding: 20px;
   resize: none;
   ${props => props.borderRadius && `border-radius: ${props.borderRadius}px`};

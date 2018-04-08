@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import "./App.css";
 import moment from "moment";
 import NotesInput from "./module-input/NotesInput";
 import NotesCard from "./module-collection/NotesCard";
@@ -8,19 +7,23 @@ import { arrayMove } from "react-sortable-hoc";
 
 export default class App extends Component {
   state = {
+    key: "modernlifeiswar",
     name: "Zakiy",
-    notes: [],
-    newArray: []
+    notes: []
   };
+
+  componentDidMount() {
+    const { key } = this.state;
+    this.getStore(key);
+  }
 
   render() {
     const { name, notes } = this.state;
     const currentDate = moment();
+    console.log("STATE DATA", notes);
 
-    console.log("DATA NOTES", notes);
     return (
       <Wrapper>
-        <Title>xNotes</Title>
         <Welcome>
           {`Good ${this.getGreetings(
             currentDate
@@ -35,26 +38,55 @@ export default class App extends Component {
           onSortEnd={this.onSortEnd}
           onDeleteCard={this.onDeleteCard}
         />
+        <Title>
+          Another thing from <a href="https://github.com/ahmadzakiy/">Zakiy</a>.
+        </Title>
       </Wrapper>
     );
   }
 
-  onAddNew = input => {
+  getStore = keyStore => {
+    /* eslint-disable no-undef */
+    // chrome.storage.sync.get(keyStore, result => {
+    //   if (!chrome.runtime.error) {
+    //     let data = JSON.parse(result[keyStore]);
+    //     console.log("GET DATA", data);
+    //     this.setState({
+    //       notes: data
+    //     });
+    //   }
+    // });
+  };
+
+  updateStore = (keyStore, data) => {
+    let obj = {};
+    obj[keyStore] = JSON.stringify(data);
+    /* eslint-disable no-undef */
+    // chrome.storage.sync.set(obj, () => {
+    //   console.log("UPDATE DATA", obj);
+    //   if (chrome.runtime.error) {
+    //     console.log("Runtime error.");
+    //   }
+    // });
+  };
+
+  onAddNew = async input => {
+    const { key } = this.state;
     if (!input.length) {
       return;
     }
-    this.setState(prevState => ({
+
+    await this.setState(prevState => ({
       notes: input.concat(prevState.notes),
       input: ""
     }));
+    this.updateStore(key, this.state.notes);
   };
 
   onDeleteCard = card => {
-    console.log("CARD", card);
-    const { notes } = this.state;
-    console.log(notes[0]);
+    const { key, notes } = this.state;
     for (let i = 0; i < notes.length; i++) {
-      if (notes[i].content == card) {
+      if (notes[i].content === card) {
         delete notes[i];
       }
     }
@@ -64,12 +96,15 @@ export default class App extends Component {
     this.setState({
       notes: cleanNotes
     });
+    this.updateStore(key, cleanNotes);
   };
 
   onSortEnd = ({ oldIndex, newIndex }) => {
+    const { key } = this.state;
     this.setState({
       notes: arrayMove(this.state.notes, oldIndex, newIndex)
     });
+    this.updateStore(key, this.state.notes);
   };
 
   getGreetings = m => {
@@ -100,13 +135,11 @@ const Wrapper = styled.div`
 
 const Title = styled.div`
   position: fixed;
-  right: 0px;
-  bottom: 0px;
+  bottom: 0;
+  right: 0;
   padding: 10px;
-  background: linear-gradient(200deg, #3602b8, #00dcff);
-  color: white;
-  font-size: 18px;
-  font-weight: 600;
+  font-size: 12px;
+  font-weight: 400;
 `;
 
 const Welcome = styled.div`

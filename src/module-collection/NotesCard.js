@@ -1,11 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import {
-  SortableContainer,
-  SortableElement,
-  arrayMove
-} from "react-sortable-hoc";
+import { SortableContainer, SortableElement } from "react-sortable-hoc";
 import Button from "../module-common/Button";
 
 export default class NotesCard extends Component {
@@ -31,7 +27,7 @@ export default class NotesCard extends Component {
           <ButtonDel
             text="X"
             size="small"
-            color="danger"
+            color="secondary"
             onClick={card => onDeleteCard(value.content)}
           />
         </RowCard>
