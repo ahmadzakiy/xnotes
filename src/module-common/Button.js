@@ -62,7 +62,7 @@ const Wrapper = styled.button`
     outline: none;
   }
   &:hover {
-    background: transparent;
+    background: #ffffff;
     ${props => css`
       color: ${Color[props.color].border};
     `};

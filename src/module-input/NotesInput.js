@@ -7,29 +7,36 @@ import moment from "moment";
 
 export default class NotesInput extends Component {
   static propTypes = {
-    name: PropTypes.string,
-    data: PropTypes.array
+    onEdit: PropTypes.bool,
+    dataEdit: PropTypes.string
   };
   state = {
     value: "",
     newNotes: []
   };
+
+  componentWillReceiveProps(nextProps) {
+    const { dataEdit } = nextProps;
+    this.setState({
+      value: dataEdit
+    });
+  }
+
   render() {
+    const { value } = this.state;
+    const { onEdit, dataEdit } = this.props;
+
     return (
       <Wrapper>
         <NoteInputBox>
           <TextArea
             placeholder={"What's on your mind ?"}
-            value={this.state.value}
+            value={value}
             onClick={() => this.handleAddNote()}
-            onChange={text => {
-              this.setState({
-                value: text
-              });
-            }}
+            onChange={text => this.onChangeInput(text)}
           />
           <ButtonAdd
-            text="SAVE"
+            text={onEdit ? "UPDATE" : "SAVE"}
             size="small"
             color="primary"
             onClick={() => this.handleAddNote()}
@@ -39,10 +46,17 @@ export default class NotesInput extends Component {
     );
   }
 
-  handleAddNote() {
+  onChangeInput = text => {
+    this.setState({
+      value: text
+    });
+  };
+
+  handleAddNote = () => {
     const { newNotes, value } = this.state;
     const newItem = {
-      dateCreated: moment().unix(),
+      id: moment().unix(),
+      dateCreated: moment().format("DD/MM/YYYY"),
       isShown: true,
       content: value
     };
@@ -52,7 +66,7 @@ export default class NotesInput extends Component {
       value: "",
       newNotes: []
     });
-  }
+  };
 }
 
 const Wrapper = styled.div`
@@ -62,7 +76,7 @@ const Wrapper = styled.div`
 `;
 
 const NoteInputBox = styled.div`
-  margin-top: 20px;
+  margin-top: 10px;
   position: relative;
   width: 500px;
   margin-bottom: 10px;

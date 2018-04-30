@@ -9,7 +9,17 @@ export default class App extends Component {
   state = {
     key: "modernlifeiswar",
     name: "john doe",
-    notes: []
+    notes: [
+      {
+        id: 1,
+        dateCreated: "13/04/2018",
+        content:
+          "Hello, welcome to xNotes. To add note just hit the 'save' button or click 'enter' at keyboard, to add newline when write note hit 'shift + enter'. To move card, pointer your mouse to the 'move' icon and then drag your cursor. To edit card just click the 'edit' icon. To delete card just hit the 'x' button. Hope you enjoy using xNotes.",
+        isShown: true
+      }
+    ],
+    dataEdit: "",
+    onEdit: false
   };
 
   componentDidMount() {
@@ -18,28 +28,36 @@ export default class App extends Component {
   }
 
   render() {
-    const { name, notes } = this.state;
+    const { name, notes, onEdit, dataEdit } = this.state;
     const currentDate = moment();
-    //console.log("STATE DATA", notes);
+    // console.log("STATE DATA", notes);
 
     return (
       <Wrapper>
         <Welcome>
           {`Good ${this.getGreetings(currentDate)}, its ${currentDate.format(
-            "dddd, D MMMM "
+            "dddd, D MMMM"
           )}. Stay awesome!`}
         </Welcome>
-        <NotesInput name={name} callbackInput={input => this.onAddNew(input)} />
+        <NotesInput
+          name={name}
+          callbackInput={input => this.onAddNew(input)}
+          onEdit={onEdit}
+          dataEdit={dataEdit}
+        />
         {notes.length !== 0 ? (
           <PrevNotes>What's on your thoughts</PrevNotes>
-        ) : null}
+        ) : (
+          <PrevNotes>Write something in your mind</PrevNotes>
+        )}
         <NotesCard
           data={notes}
           onSortEnd={this.onSortEnd}
           onDeleteCard={this.onDeleteCard}
+          onEditCard={this.onEditCard}
         />
         <Title>
-          Another thing from <a href="https://github.com/ahmadzakiy/">Zakiy</a>.
+          Another thing from <a href="https://ahmadzakiy.com/">Zakiy</a>.
         </Title>
       </Wrapper>
     );
@@ -78,9 +96,19 @@ export default class App extends Component {
 
     await this.setState(prevState => ({
       notes: input.concat(prevState.notes),
-      input: ""
+      input: "",
+      onEdit: false,
+      dataEdit: ""
     }));
     this.updateStore(key, this.state.notes);
+  };
+
+  onEditCard = card => {
+    this.setState({
+      onEdit: true,
+      dataEdit: card
+    });
+    this.onDeleteCard(card);
   };
 
   onDeleteCard = card => {
@@ -138,7 +166,7 @@ const Title = styled.div`
   bottom: 0;
   right: 0;
   padding: 10px;
-  font-size: 12px;
+  font-size: 10px;
   font-weight: 400;
 `;
 

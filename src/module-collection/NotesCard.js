@@ -1,17 +1,26 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import { SortableContainer, SortableElement } from "react-sortable-hoc";
+import {
+  SortableContainer,
+  SortableElement,
+  SortableHandle
+} from "react-sortable-hoc";
 import Button from "../module-common/Button";
 
 export default class NotesCard extends Component {
   static propTypes = {
     data: PropTypes.array,
     onSortEnd: PropTypes.func,
-    onDeleteCard: PropTypes.func
+    onDeleteCard: PropTypes.func,
+    onEditCard: PropTypes.func
   };
   render() {
-    const { data, onSortEnd, onDeleteCard } = this.props;
+    const { data, onSortEnd, onDeleteCard, onEditCard } = this.props;
+
+    const DragHandle = SortableHandle(() => (
+      <IconDragHandle>move</IconDragHandle>
+    ));
 
     const SortableItem = SortableElement(({ value }) => (
       <Row>
@@ -30,6 +39,10 @@ export default class NotesCard extends Component {
             color="danger"
             onClick={card => onDeleteCard(value.content)}
           />
+          <DragHandle />
+          <EditNotes onClick={card => onEditCard(value.content)}>
+            edit
+          </EditNotes>
         </RowCard>
       </Row>
     ));
@@ -52,7 +65,7 @@ export default class NotesCard extends Component {
     });
     return (
       <Wrapper>
-        <SortableList items={data} onSortEnd={onSortEnd} />
+        <SortableList items={data} onSortEnd={onSortEnd} useDragHandle={true} />
       </Wrapper>
     );
   }
@@ -74,11 +87,13 @@ const RowCard = styled.div`
   width: 500px;
   height: auto;
   border-radius: 8px;
-  margin-top: 15px;
+  margin-top: 10px;
+  margin-bottom: 30px;
   background: #ffffff;
   border: 1px solid #ffffff;
   padding: 20px;
   font-size: 12px;
+  word-wrap: break-word;
   line-height: 20px;
   transition: box-shadow 0.35s ease-out, transform 0.3s ease-out,
     opacity 0.2s ease-out;
@@ -87,12 +102,36 @@ const RowCard = styled.div`
   &:hover {
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
     transform: translate(0, -4px);
-    cursor: all-scroll;
+    cursor: text;
   }
 `;
 
 const ButtonDel = styled(Button)`
   position: absolute;
-  top: 0;
+  top: -15px;
   right: 0;
+`;
+
+const IconDragHandle = styled.div`
+  cursor: all-scroll;
+  position: absolute;
+  left: 10px;
+  margin-top: 25px;
+  font-size: 10px;
+  color: #bebebe;
+  &:hover {
+    color: #232323;
+  }
+`;
+
+const EditNotes = styled.div`
+  cursor: pointer;
+  position: absolute;
+  left: 50px;
+  margin-top: 25px;
+  font-size: 10px;
+  color: #bebebe;
+  &:hover {
+    color: #232323;
+  }
 `;
