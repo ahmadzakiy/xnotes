@@ -4,11 +4,13 @@ import moment from "moment";
 import NotesInput from "./module-input/NotesInput";
 import NotesCard from "./module-collection/NotesCard";
 import { arrayMove } from "react-sortable-hoc";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 export default class App extends Component {
   state = {
     key: "modernlifeiswar",
-    name: "john doe",
+    name: "amorfati",
     notes: [
       {
         id: 1,
@@ -19,17 +21,36 @@ export default class App extends Component {
       }
     ],
     dataEdit: "",
-    onEdit: false
+    onEdit: false,
+    onAnimate: true,
+    animateEffect: "fade-down"
   };
 
   componentDidMount() {
     const { key } = this.state;
     this.getStore(key);
+    AOS.init({
+      offset: 0,
+      duration: 500,
+      easing: "ease-out-quart",
+      delay: 100,
+      once: true,
+      disable: () => {}
+    });
+    console.log("just love the world that won't love you back~");
   }
 
   render() {
-    const { name, notes, onEdit, dataEdit } = this.state;
+    const {
+      name,
+      notes,
+      onEdit,
+      dataEdit,
+      onAnimate,
+      animateEffect
+    } = this.state;
     const currentDate = moment();
+
     // console.log("STATE DATA", notes);
 
     return (
@@ -55,9 +76,11 @@ export default class App extends Component {
           onSortEnd={this.onSortEnd}
           onDeleteCard={this.onDeleteCard}
           onEditCard={this.onEditCard}
+          onAnimate={onAnimate}
+          animateEffect={animateEffect}
         />
         <Title>
-          Another thing from <a href="https://ahmadzakiy.com/">Zakiy</a>.
+          Another thing from <a href="https://ahmadzakiy.com/">Zakiy</a>
         </Title>
       </Wrapper>
     );
@@ -98,23 +121,26 @@ export default class App extends Component {
       notes: input.concat(prevState.notes),
       input: "",
       onEdit: false,
-      dataEdit: ""
+      dataEdit: "",
+      onAnimate: true,
+      animateEffect: "fade-right"
     }));
     this.updateStore(key, this.state.notes);
   };
 
-  onEditCard = card => {
+  onEditCard = (cardId, cardContent) => {
     this.setState({
       onEdit: true,
-      dataEdit: card
+      dataEdit: cardContent,
+      onAnimate: false
     });
-    this.onDeleteCard(card);
+    this.onDeleteCard(cardId);
   };
 
-  onDeleteCard = card => {
+  onDeleteCard = cardId => {
     const { key, notes } = this.state;
     for (let i = 0; i < notes.length; i++) {
-      if (notes[i].content === card) {
+      if (notes[i].id === cardId) {
         delete notes[i];
       }
     }
@@ -122,7 +148,9 @@ export default class App extends Component {
       return x !== (undefined || null || "");
     });
     this.setState({
-      notes: cleanNotes
+      notes: cleanNotes,
+      onAnimate: true,
+      animateEffect: "zoom-out-left"
     });
     this.updateStore(key, cleanNotes);
   };
@@ -130,6 +158,7 @@ export default class App extends Component {
   onSortEnd = ({ oldIndex, newIndex }) => {
     const { key } = this.state;
     this.setState({
+      onAnimate: false,
       notes: arrayMove(this.state.notes, oldIndex, newIndex)
     });
     this.updateStore(key, this.state.notes);

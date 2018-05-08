@@ -24,11 +24,11 @@ export default class NotesInput extends Component {
 
   render() {
     const { value } = this.state;
-    const { onEdit, dataEdit } = this.props;
+    const { onEdit } = this.props;
 
     return (
       <Wrapper>
-        <NoteInputBox>
+        <NoteInputBox data-aos="fade-up">
           <TextArea
             placeholder={"What's on your mind ?"}
             value={value}

@@ -13,17 +13,29 @@ export default class NotesCard extends Component {
     data: PropTypes.array,
     onSortEnd: PropTypes.func,
     onDeleteCard: PropTypes.func,
-    onEditCard: PropTypes.func
+    onEditCard: PropTypes.func,
+    onAnimate: PropTypes.bool,
+    animateEffect: PropTypes.string
   };
   render() {
-    const { data, onSortEnd, onDeleteCard, onEditCard } = this.props;
+    const {
+      data,
+      onSortEnd,
+      onDeleteCard,
+      onEditCard,
+      onAnimate,
+      animateEffect
+    } = this.props;
+
+    // console.log("ON ANIMATE", onAnimate, animateEffect);
+    // console.log("DATA", data);
 
     const DragHandle = SortableHandle(() => (
       <IconDragHandle>move</IconDragHandle>
     ));
 
     const SortableItem = SortableElement(({ value }) => (
-      <Row>
+      <Row data-aos={onAnimate ? animateEffect : null}>
         <RowCard>
           {value.content.split("\n").map((item, key) => {
             return (
@@ -37,10 +49,14 @@ export default class NotesCard extends Component {
             text="X"
             size="small"
             color="danger"
-            onClick={card => onDeleteCard(value.content)}
+            onClick={cardId => onDeleteCard(value.id)}
           />
           <DragHandle />
-          <EditNotes onClick={card => onEditCard(value.content)}>
+          <EditNotes
+            onClick={(cardId, cardContent) =>
+              onEditCard(value.id, value.content)
+            }
+          >
             edit
           </EditNotes>
         </RowCard>

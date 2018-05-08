@@ -1,23 +1,36 @@
-# xNotes v.1.1.1
+# :ledger:xNotes
 
-An app to write notes on chrome new tab
+#### v.1.2.0
 
-## GETTING STARTED
+### An app to write notes on chrome new tab
+
+#### GETTING STARTED
+
+to develop xnotes
 
 ```
+clone this repo
 npm install / yarn install
 npm start / yarn start
 ```
 
-## BUILD CHROME EXTENSION
+to build chrome extension
 
 ```
-un-commend chrome.storage function at app.js
+uncomment chrome.storage function at app.js
 npm run build
 load build folder from chrome browser
 ```
 
-## LOG
+#### Tech Stack
+
+* `ReactJS`: Javascript Library
+* `styled-component`: CSS in JS
+* `AOS JS` : Animation Library
+* `Moment JS` : Datetime Library
+* `react-sortable-hoc` : Sortable Library
+
+#### LOG
 
 ```
 v.1.0.0
@@ -36,4 +49,10 @@ v.1.1.0
 ```
 v.1.1.1
 - fix bug
+```
+
+v.1.2.0
+
+```
+- add animation
 ```

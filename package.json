@@ -1,8 +1,9 @@
 {
   "name": "xnotes",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "private": true,
   "dependencies": {
+    "aos": "^2.2.0",
     "moment": "^2.21.0",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
@@ -20,10 +21,10 @@
     "build-storybook": "build-storybook -s public"
   },
   "devDependencies": {
-    "@storybook/react": "^3.3.12",
     "@storybook/addon-actions": "^3.3.12",
     "@storybook/addon-links": "^3.3.12",
     "@storybook/addons": "^3.3.12",
+    "@storybook/react": "^3.3.12",
     "babel-core": "^6.26.0"
   }
 }
