@@ -54,14 +54,14 @@ v1.1.1
 - fix bug
 ```
 
-v.1.2.0
+v1.2.0
 
 ```
 - add animation
 ```
 
-v.1.2.1
+v1.2.1
 
 ```
-- chane copywrite welcoming card
+- change copywrite welcoming card
 ```
