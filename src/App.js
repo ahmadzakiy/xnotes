@@ -16,7 +16,7 @@ export default class App extends Component {
         id: 1,
         dateCreated: "13/04/2018",
         content:
-          "Hello, welcome to xNotes. To add note just hit the 'save' button or click 'enter' at keyboard, to add newline when write note hit 'shift + enter'. To move card, pointer your mouse to the 'move' icon and then drag your cursor. To edit card just click the 'edit' icon. To delete card just hit the 'x' button. Hope you enjoy using xNotes.",
+          "Hi, \r\n\r\n Thank you for using xNotes, here are some useful tips for you: \r\n - To add a note, just hit the 'save' button or click 'enter' on your keyboard \r\n - To add a new line, hold 'shift' then press 'enter' \r\n - To move your card, point your mouse to the 'move' text and then drag the card \r\n - To edit your card, click the 'edit' text \r\n - To delete your card, click the 'x' button \r\n\r\n Now you're ready to write your first note. Enjoy!",
         isShown: true
       }
     ],
@@ -31,11 +31,10 @@ export default class App extends Component {
     this.getStore(key);
     AOS.init({
       offset: 0,
-      duration: 500,
+      duration: 400,
       easing: "ease-out-quart",
       delay: 100,
-      once: true,
-      disable: () => {}
+      once: true
     });
     console.log("just love the world that won't love you back~");
   }

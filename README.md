@@ -32,22 +32,25 @@ load build folder from chrome browser
 
 #### LOG
 
+v1.0.0
+
 ```
-v.1.0.0
 - add note
 - delete note
 - move card
 ```
 
+v1.1.0
+
 ```
-v.1.1.0
 - edit note
 - copy note
 - welcoming note
 ```
 
+v1.1.1
+
 ```
-v.1.1.1
 - fix bug
 ```
 
@@ -55,4 +58,10 @@ v.1.2.0
 
 ```
 - add animation
+```
+
+v.1.2.1
+
+```
+- chane copywrite welcoming card
 ```
