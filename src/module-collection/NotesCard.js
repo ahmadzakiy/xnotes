@@ -35,8 +35,8 @@ export default class NotesCard extends Component {
     ));
 
     const SortableItem = SortableElement(({ value }) => (
-      <Row data-aos={onAnimate ? animateEffect : null}>
-        <RowCard>
+      <Center>
+        <RowCard data-aos={onAnimate ? animateEffect : null}>
           {value.content.split("\n").map((item, key) => {
             return (
               <span key={key}>
@@ -60,7 +60,7 @@ export default class NotesCard extends Component {
             edit
           </EditNotes>
         </RowCard>
-      </Row>
+      </Center>
     ));
 
     const SortableList = SortableContainer(({ items }) => {
@@ -93,7 +93,7 @@ const Wrapper = styled.div`
   margin-bottom: 50px;
 `;
 
-const Row = styled.div`
+const Center = styled.div`
   display: flex;
   justify-content: center;
 `;

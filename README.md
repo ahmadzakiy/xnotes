@@ -24,11 +24,11 @@ load build folder from chrome browser
 
 #### Tech Stack
 
-* `ReactJS`: Javascript Library
-* `styled-component`: CSS in JS
-* `AOS JS` : Animation Library
-* `Moment JS` : Datetime Library
-* `react-sortable-hoc` : Sortable Library
+- `ReactJS`: UI Library
+- `styled-component`: CSS in JS
+- `AOS JS` : Animation Library
+- `Moment JS` : Datetime Library
+- `react-sortable-hoc` : Sortable Library
 
 #### LOG
 
@@ -51,7 +51,7 @@ v1.1.0
 v1.1.1
 
 ```
-- fix bug
+- fixing bug
 ```
 
 v1.2.0
@@ -64,4 +64,11 @@ v1.2.1
 
 ```
 - change copywrite welcoming card
+```
+
+v1.3.0
+
+```
+- fixing bug move card
+- add storybookJS
 ```

@@ -130,8 +130,7 @@ export default class App extends Component {
   onEditCard = (cardId, cardContent) => {
     this.setState({
       onEdit: true,
-      dataEdit: cardContent,
-      onAnimate: false
+      dataEdit: cardContent
     });
     this.onDeleteCard(cardId);
   };
@@ -147,9 +146,7 @@ export default class App extends Component {
       return x !== (undefined || null || "");
     });
     this.setState({
-      notes: cleanNotes,
-      onAnimate: true,
-      animateEffect: "zoom-out-left"
+      notes: cleanNotes
     });
     this.updateStore(key, cleanNotes);
   };
