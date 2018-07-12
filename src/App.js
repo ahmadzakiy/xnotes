@@ -86,7 +86,6 @@ export default class App extends Component {
   }
 
   getStore = keyStore => {
-    /* eslint-disable no-undef */
     // chrome.storage.sync.get(keyStore, result => {
     //   if (!chrome.runtime.error) {
     //     let data = JSON.parse(result[keyStore]);
@@ -99,9 +98,8 @@ export default class App extends Component {
   };
 
   updateStore = (keyStore, data) => {
-    let obj = {};
-    obj[keyStore] = JSON.stringify(data);
-    /* eslint-disable no-undef */
+    // let obj = {};
+    // obj[keyStore] = JSON.stringify(data);
     // chrome.storage.sync.set(obj, () => {
     //   //console.log("UPDATE DATA", obj);
     //   if (chrome.runtime.error) {

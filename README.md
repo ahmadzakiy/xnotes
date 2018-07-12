@@ -1,6 +1,6 @@
 # :ledger:xNotes
 
-#### v.1.2.0
+#### v.1.3.1
 
 ### An app to write notes on chrome new tab
 
@@ -66,7 +66,7 @@ v1.2.1
 - change copywrite welcoming card
 ```
 
-v1.3.0
+v1.3.1
 
 ```
 - fixing bug move card
