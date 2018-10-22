@@ -16,7 +16,7 @@ export default class App extends Component {
         id: 1,
         dateCreated: "13/04/2018",
         content:
-          "Hi, \r\n\r\n Thank you for using xNotes, here are some useful tips for you: \r\n - To add a note, just hit the 'save' button or click 'enter' on your keyboard \r\n - To add a new line, hold 'shift' then press 'enter' \r\n - To move your card, point your mouse to the 'move' text and then drag the card \r\n - To edit your card, click the 'edit' text \r\n - To delete your card, click the 'x' button \r\n\r\n Now you're ready to write your first note. Enjoy!",
+          "Hi, \r\n\r\n Thank you for using xNotes, here are some useful tips for you: \r\n - To add a note, just hit the 'save' button or hold 'shift' then press 'enter' \r\n - To add a new line, just press 'enter' \r\n - To move your card, point your mouse to the 'move' text and then drag the card \r\n - To edit your card, click the 'edit' text \r\n - To delete your card, click the 'x' button \r\n\r\n Now you're ready to write your first note. Enjoy!",
         isShown: true
       }
     ],
