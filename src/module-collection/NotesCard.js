@@ -27,9 +27,6 @@ export default class NotesCard extends Component {
       animateEffect
     } = this.props;
 
-    // console.log("ON ANIMATE", onAnimate, animateEffect);
-    // console.log("DATA", data);
-
     const DragHandle = SortableHandle(() => (
       <IconDragHandle>move</IconDragHandle>
     ));
@@ -114,8 +111,7 @@ const RowCard = styled.div`
   transition: box-shadow 0.35s ease-out, transform 0.3s ease-out,
     opacity 0.2s ease-out;
   box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.1);
-
-  &:hover {
+  :hover {
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
     transform: translate(0, -4px);
     cursor: text;
@@ -135,7 +131,7 @@ const IconDragHandle = styled.div`
   margin-top: 25px;
   font-size: 10px;
   color: #bebebe;
-  &:hover {
+  :hover {
     color: #232323;
   }
 `;
@@ -147,7 +143,7 @@ const EditNotes = styled.div`
   margin-top: 25px;
   font-size: 10px;
   color: #bebebe;
-  &:hover {
+  :hover {
     color: #232323;
   }
 `;

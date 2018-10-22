@@ -1,6 +1,6 @@
 # :ledger:xNotes
 
-#### v.1.3.1
+#### v.1.3.2
 
 ### An app to write notes on chrome new tab
 
@@ -71,4 +71,11 @@ v1.3.1
 ```
 - fixing bug move card
 - add storybookJS
+```
+
+v1.3.2
+
+```
+- cleaning code
+- change add new note from "enter" keyword to "enter + shift" keyword
 ```

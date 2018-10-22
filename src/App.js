@@ -48,9 +48,10 @@ export default class App extends Component {
       onAnimate,
       animateEffect
     } = this.state;
+
     const currentDate = moment();
 
-    // console.log("STATE DATA", notes);
+    console.log("STATE DATA", notes);
 
     return (
       <Wrapper>
@@ -61,14 +62,14 @@ export default class App extends Component {
         </Welcome>
         <NotesInput
           name={name}
-          callbackInput={input => this.onAddNew(input)}
+          callbackInput={this.onAddNew}
           onEdit={onEdit}
           dataEdit={dataEdit}
         />
         {notes.length !== 0 ? (
-          <PrevNotes>What's on your thoughts</PrevNotes>
+          <Title>What's on your thoughts</Title>
         ) : (
-          <PrevNotes>Write something in your mind</PrevNotes>
+          <Title>Write something in your mind</Title>
         )}
         <NotesCard
           data={notes}
@@ -78,9 +79,9 @@ export default class App extends Component {
           onAnimate={onAnimate}
           animateEffect={animateEffect}
         />
-        <Title>
+        <CreateBy>
           Another thing from <a href="https://ahmadzakiy.com/">Zakiy</a>
-        </Title>
+        </CreateBy>
       </Wrapper>
     );
   }
@@ -113,7 +114,6 @@ export default class App extends Component {
     if (!input.length) {
       return;
     }
-
     await this.setState(prevState => ({
       notes: input.concat(prevState.notes),
       input: "",
@@ -140,7 +140,7 @@ export default class App extends Component {
         delete notes[i];
       }
     }
-    const cleanNotes = notes.filter(function(x) {
+    const cleanNotes = notes.filter(x => {
       return x !== (undefined || null || "");
     });
     this.setState({
@@ -184,15 +184,6 @@ const Wrapper = styled.div`
   flex-direction: column;
 `;
 
-const Title = styled.div`
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  padding: 10px;
-  font-size: 10px;
-  font-weight: 400;
-`;
-
 const Welcome = styled.div`
   display: flex;
   justify-content: center;
@@ -202,7 +193,7 @@ const Welcome = styled.div`
   font-size: 16px;
 `;
 
-const PrevNotes = styled.div`
+const Title = styled.div`
   display: flex;
   justify-content: center;
   padding: 10px 20px;
@@ -210,4 +201,12 @@ const PrevNotes = styled.div`
   margin-left: -250px;
   color: #bebebe;
   font-size: 14px;
+`;
+
+const CreateBy = styled.div`
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  font-size: 10px;
+  font-weight: 400;
 `;

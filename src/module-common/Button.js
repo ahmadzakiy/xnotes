@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import PropTypes from "prop-types";
 
-export const Color = {
+const Color = {
   primary: { background: "#179FF3", border: "#179FF3", font: "white" },
   secondary: { background: "gray", border: "gray", font: "white" },
   success: { background: "green", border: "green", font: "white" },
@@ -11,7 +11,7 @@ export const Color = {
   transparent: { background: "transparent", border: "black", font: "black" }
 };
 
-export const Size = {
+const Size = {
   large: { padding: 22, font: 18 },
   medium: { padding: 18, font: 14 },
   small: { padding: 10, font: 10 }
@@ -34,7 +34,7 @@ export default class Button extends Component {
   };
 
   static defaultProps = {
-    size: "large",
+    size: "medium",
     color: "primary"
   };
 
@@ -48,7 +48,7 @@ const Wrapper = styled.button`
   flex: none;
   display: inline-flex;
   vertical-align: top;
-  align-item: center;
+  align-items: center;
   justify-content: center;
   border: none;
   transition: 0.3s;
@@ -58,26 +58,21 @@ const Wrapper = styled.button`
   user-select: none;
   margin: 4px;
   box-shadow: 0px 3px 2px 0px rgba(0, 0, 0, 0.1);
-  &:focus {
-    outline: none;
-  }
-  &:hover {
-    background: #ffffff;
-    ${props => css`
-      color: ${Color[props.color].border};
-    `};
-  }
+  ${props => props.width && `width: ${props.width}px;`};
   ${props =>
-    props.width &&
-    css`
-      width: ${props.width}px;
-    `};
-
-  ${props => css`
+    `
     font-size: ${Size[props.size].font}px;
     padding: 4px ${Size[props.size].padding}px;
     color: ${Color[props.color].font};
     background-color: ${Color[props.color].background};
     border: 1px solid ${Color[props.color].border};
   `};
+
+  :focus {
+    outline: none;
+  }
+  :hover {
+    background: #ffffff;
+    ${props => `color: ${Color[props.color].border};`};
+  }
 `;

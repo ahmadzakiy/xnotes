@@ -34,15 +34,16 @@ export default class TextArea extends Component {
       />
     );
   }
-  onChange = event => {
-    const onChange = this.props.onChange;
-    if (onChange) onChange(event.target.value);
+  onChange = e => {
+    const { onChange } = this.props;
+    if (onChange) onChange(e.target.value);
   };
 
   onEnterPress = e => {
-    if (e.keyCode === 13 && e.shiftKey === false) {
+    const { onClick } = this.props;
+    if (e.keyCode === 13 && e.shiftKey === true) {
       e.preventDefault();
-      this.props.onClick();
+      onClick();
     }
   };
 }

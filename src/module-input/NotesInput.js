@@ -32,14 +32,14 @@ export default class NotesInput extends Component {
           <TextArea
             placeholder={"What's on your mind ?"}
             value={value}
-            onClick={() => this.handleAddNote()}
-            onChange={text => this.onChangeInput(text)}
+            onClick={this.handleAddNote}
+            onChange={this.onChangeInput}
           />
           <ButtonAdd
             text={onEdit ? "UPDATE" : "SAVE"}
             size="small"
             color="primary"
-            onClick={() => this.handleAddNote()}
+            onClick={this.handleAddNote}
           />
         </NoteInputBox>
       </Wrapper>
@@ -54,6 +54,7 @@ export default class NotesInput extends Component {
 
   handleAddNote = () => {
     const { newNotes, value } = this.state;
+    const { callbackInput } = this.props;
     const newItem = {
       id: moment().unix(),
       dateCreated: moment().format("DD/MM/YYYY"),
@@ -61,7 +62,7 @@ export default class NotesInput extends Component {
       content: value
     };
     newNotes.push(newItem);
-    this.props.callbackInput(newNotes);
+    callbackInput(newNotes);
     this.setState({
       value: "",
       newNotes: []
@@ -72,15 +73,11 @@ export default class NotesInput extends Component {
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
-  z-index: 2;
 `;
 
 const NoteInputBox = styled.div`
-  margin-top: 10px;
-  position: relative;
-  width: 500px;
-  margin-bottom: 10px;
   position: fixed;
+  margin: 10px 0;
 `;
 
 const ButtonAdd = styled(Button)`

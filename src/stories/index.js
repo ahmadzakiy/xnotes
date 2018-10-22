@@ -8,8 +8,8 @@ import { withInfo, setDefaults } from "@storybook/addon-info";
 import Button from "../module-common/Button";
 import TextArea from "../module-common/TextArea";
 import NotesInput from "../module-input/NotesInput";
+import { width } from "window-size";
 
-// addon-info
 setDefaults({
   header: false, // Toggles display of header with component name and description
   inline: false, // Displays info inline vs click button to view
@@ -17,23 +17,24 @@ setDefaults({
 });
 
 const styles = {
-  textAlign: "center",
-  marginTop: 100
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "center",
+  alignItems: "center",
+  position: "fixed",
+  width: "100%",
+  height: "100%"
 };
+
 const Center = ({ children }) => <div style={styles}>{children}</div>;
 
 storiesOf("Atoms/Button", module)
-  // .addDecorator(story => (
-  //   <div style={{ textAlign: "center", marginTop: 50 }}>{story()}</div>
-  // ))
   .add(
-    "Basic",
+    "Default",
     withInfo(`
-        description or documentation about my component, supports markdown
-      
-        ~~~js
-        <Button>Click Here</Button>
-        ~~~
+
+        # Default Button
+        #### Must pass a props text={string}
       
       `)(() => (
       <Center>
@@ -43,16 +44,12 @@ storiesOf("Atoms/Button", module)
   )
   .add(
     "Size",
-    withInfo({
-      styles: {
-        header: {
-          h1: {
-            color: "red"
-          }
-        }
-      },
-      text: "Button with different size"
-    })(() => (
+    withInfo(`
+
+    # Size Button
+    #### Must pass a props size={string}
+  
+  `)(() => (
       <Center>
         <Button
           text="SAVE"
@@ -77,16 +74,12 @@ storiesOf("Atoms/Button", module)
   )
   .add(
     "Color",
-    withInfo({
-      styles: {
-        header: {
-          h1: {
-            color: "red"
-          }
-        }
-      },
-      text: "Button with different size"
-    })(() => (
+    withInfo(`
+
+    # Color Button
+    #### Must pass a props color={string}
+  
+  `)(() => (
       <Center>
         <Button
           text="SAVE"
@@ -128,20 +121,26 @@ storiesOf("Atoms/Button", module)
     ))
   );
 
-storiesOf("Atoms/Text Area", module).add("Default", () => (
-  <TextArea
-    placeholder="What's on your mind ?"
-    // value={value}
-    // onClick={() => this.handleAddNote()}
-    // onChange={text => this.onChangeInput(text)}
-  />
-));
+storiesOf("Atoms/Text Area", module).add(
+  "Default",
+  withInfo(`
 
-storiesOf("Molecules", module).add("Single Input Form", () => (
-  <NotesInput
-    name="James"
-    // callbackInput={input => this.onAddNew(input)}
-    // onEdit={onEdit}
-    // dataEdit={dataEdit}
-  />
-));
+      # Default Text Area
+      #### Must pass a placeholder placeholder={string}
+
+    `)(() => (
+    <Center>
+      <TextArea placeholder="What's on your mind ?" />
+    </Center>
+  ))
+);
+
+storiesOf("Molecules", module).add(
+  "Text Area Form",
+  withInfo(`
+
+      # Default Text Area Form
+      #### Must pass a placeholder placeholder={string}
+
+    `)(() => <NotesInput />)
+);
