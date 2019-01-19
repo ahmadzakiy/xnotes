@@ -1,6 +1,6 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
+import { string, oneOf, func, number } from "prop-types";
 import styled from "styled-components";
-import PropTypes from "prop-types";
 
 const Color = {
   primary: { background: "#179FF3", border: "#179FF3", font: "white" },
@@ -17,12 +17,12 @@ const Size = {
   small: { padding: 10, font: 10 }
 };
 
-export default class Button extends Component {
+export default class Button extends PureComponent {
   static propTypes = {
-    text: PropTypes.string,
-    width: PropTypes.number,
-    size: PropTypes.oneOf(["large", "medium", "small"]),
-    color: PropTypes.oneOf([
+    text: string,
+    borderRadius: number,
+    size: oneOf(["large", "medium", "small"]),
+    color: oneOf([
       "primary",
       "secondary",
       "success",
@@ -30,49 +30,50 @@ export default class Button extends Component {
       "danger",
       "transparent"
     ]),
-    onClick: PropTypes.func
+    onClick: func
   };
 
   static defaultProps = {
     size: "medium",
-    color: "primary"
+    color: "primary",
+    borderRadius: 8
   };
 
   render() {
     const { text, ...props } = this.props;
+
     return <Wrapper {...props}>{text}</Wrapper>;
   }
 }
 
 const Wrapper = styled.button`
-  flex: none;
-  display: inline-flex;
-  vertical-align: top;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  transition: 0.3s;
-  cursor: pointer;
-  border-radius: 22px;
-  white-space: nowrap;
-  user-select: none;
-  margin: 4px;
-  box-shadow: 0px 3px 2px 0px rgba(0, 0, 0, 0.1);
-  ${props => props.width && `width: ${props.width}px;`};
-  ${props =>
-    `
+  ${props => `
     font-size: ${Size[props.size].font}px;
     padding: 4px ${Size[props.size].padding}px;
     color: ${Color[props.color].font};
     background-color: ${Color[props.color].background};
     border: 1px solid ${Color[props.color].border};
+    border-radius: ${props.borderRadius}px;
   `};
+
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  user-select: none;
+  margin: 4px;
+  box-shadow: 0px 3px 2px 0px rgba(0, 0, 0, 0.1);
+  transition: 0.3s;
 
   :focus {
     outline: none;
   }
   :hover {
     background: #ffffff;
-    ${props => `color: ${Color[props.color].border};`};
+    ${props => `
+      color: ${Color[props.color].border};
+      border: 1px solid ${Color[props.color].border};
+    `};
   }
 `;
