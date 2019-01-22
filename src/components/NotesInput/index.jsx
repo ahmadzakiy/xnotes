@@ -36,7 +36,6 @@ export default class NotesInput extends Component {
     const { onSet } = this.props;
 
     onSet(value);
-
     this.setState({
       value: ""
     });
@@ -57,7 +56,7 @@ export default class NotesInput extends Component {
         <ButtonAdd
           text={isEdit ? "UPDATE" : "SAVE"}
           size="small"
-          color="primary"
+          color="secondary"
           onClick={this.onAddInput}
         />
       </Wrapper>
@@ -67,10 +66,12 @@ export default class NotesInput extends Component {
 
 const Wrapper = styled.div`
   position: relative;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 `;
 
 const ButtonAdd = styled(Button)`
-  position: absolute;
-  bottom: 4px;
-  right: 1px;
+  margin-top: 10px;
 `;

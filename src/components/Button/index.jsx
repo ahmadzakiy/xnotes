@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 const Color = {
   primary: { background: "#179FF3", border: "#179FF3", font: "white" },
-  secondary: { background: "gray", border: "gray", font: "white" },
+  secondary: { background: "#232323", border: "#232323", font: "white" },
   success: { background: "green", border: "green", font: "white" },
   warning: { background: "orange", border: "orange", font: "white" },
   danger: { background: "#ff4e4e", border: "#ff4e4e", font: "white" },
@@ -56,6 +56,8 @@ const Wrapper = styled.button`
     border-radius: ${props.borderRadius}px;
   `};
 
+  cursor: pointer;
+  font-weight: 700;
   font-family: inherit;
   display: flex;
   align-items: center;
@@ -70,7 +72,7 @@ const Wrapper = styled.button`
     outline: none;
   }
   :hover {
-    background: #ffffff;
+    background: transparent;
     ${props => `
       color: ${Color[props.color].border};
       border: 1px solid ${Color[props.color].border};

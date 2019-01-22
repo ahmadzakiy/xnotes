@@ -63,5 +63,7 @@ const Wrapper = styled.textarea`
   :focus {
     outline: none;
     background: #ffffff;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+    transform: translate(0, -6px);
   }
 `;

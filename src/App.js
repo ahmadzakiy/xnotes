@@ -9,98 +9,25 @@ import "aos/dist/aos.css";
 import NotesInput from "./components/NotesInput";
 import NotesCard from "./components/NotesCard";
 
+const STORAGE_KEY = "modernlifeiswar";
+const WELCOME_NOTE = `Hi, 
+
+Thank you for using xNotes, here are some useful tips for you: 
+- To add a note, just hit the 'save' button or hold 'shift' then press 'enter' 
+- To add a new line, just press 'enter' 
+- To move your card, point your mouse to the 'move' text and then drag the card 
+- To edit your card, click the 'edit' text 
+- To delete your card, click the 'x' button 
+                  
+Now you're ready to write your first note. Enjoy!`;
+
 export default class App extends Component {
   state = {
-    key: "modernlifeiswar",
     notes: [
       {
         id: 1,
         dateCreated: "13/04/2018",
-        content: `Hi, 
-
-                  Thank you for using xNotes, here are some useful tips for you: 
-                  - To add a note, just hit the 'save' button or hold 'shift' then press 'enter' 
-                  - To add a new line, just press 'enter' 
-                  - To move your card, point your mouse to the 'move' text and then drag the card 
-                  - To edit your card, click the 'edit' text 
-                  - To delete your card, click the 'x' button 
-                  
-                  Now you're ready to write your first note. Enjoy!`,
-        isShown: true
-      },
-      {
-        id: 2,
-        dateCreated: "13/04/2018",
-        content: `Hi, 
-
-                  Thank you for using xNotes, here are some useful tips for you: 
-                  - To add a note, just hit the 'save' button or hold 'shift' then press 'enter' 
-                  - To add a new line, just press 'enter' 
-                  - To move your card, point your mouse to the 'move' text and then drag the card 
-                  - To edit your card, click the 'edit' text 
-                  - To delete your card, click the 'x' button 
-                  
-                  Now you're ready to write your first note. Enjoy!`,
-        isShown: true
-      },
-      {
-        id: 3,
-        dateCreated: "13/04/2018",
-        content: `Hi, 
-
-                  Thank you for using xNotes, here are some useful tips for you: 
-                  - To add a note, just hit the 'save' button or hold 'shift' then press 'enter' 
-                  - To add a new line, just press 'enter' 
-                  - To move your card, point your mouse to the 'move' text and then drag the card 
-                  - To edit your card, click the 'edit' text 
-                  - To delete your card, click the 'x' button 
-                  
-                  Now you're ready to write your first note. Enjoy!`,
-        isShown: true
-      },
-      {
-        id: 4,
-        dateCreated: "13/04/2018",
-        content: `Hi, 
-
-                  Thank you for using xNotes, here are some useful tips for you: 
-                  - To add a note, just hit the 'save' button or hold 'shift' then press 'enter' 
-                  - To add a new line, just press 'enter' 
-                  - To move your card, point your mouse to the 'move' text and then drag the card 
-                  - To edit your card, click the 'edit' text 
-                  - To delete your card, click the 'x' button 
-                  
-                  Now you're ready to write your first note. Enjoy!`,
-        isShown: true
-      },
-      {
-        id: 5,
-        dateCreated: "13/04/2018",
-        content: `Hi, 
-
-                  Thank you for using xNotes, here are some useful tips for you: 
-                  - To add a note, just hit the 'save' button or hold 'shift' then press 'enter' 
-                  - To add a new line, just press 'enter' 
-                  - To move your card, point your mouse to the 'move' text and then drag the card 
-                  - To edit your card, click the 'edit' text 
-                  - To delete your card, click the 'x' button 
-                  
-                  Now you're ready to write your first note. Enjoy!`,
-        isShown: true
-      },
-      {
-        id: 6,
-        dateCreated: "13/04/2018",
-        content: `Hi, 
-
-                  Thank you for using xNotes, here are some useful tips for you: 
-                  - To add a note, just hit the 'save' button or hold 'shift' then press 'enter' 
-                  - To add a new line, just press 'enter' 
-                  - To move your card, point your mouse to the 'move' text and then drag the card 
-                  - To edit your card, click the 'edit' text 
-                  - To delete your card, click the 'x' button 
-                  
-                  Now you're ready to write your first note. Enjoy!`,
+        content: WELCOME_NOTE,
         isShown: true
       }
     ],
@@ -110,10 +37,7 @@ export default class App extends Component {
   };
 
   componentDidMount() {
-    const { key } = this.state;
-
-    this.getStore(key);
-
+    this.getStore(STORAGE_KEY);
     AOS.init({
       offset: 0,
       duration: 400,
@@ -127,7 +51,6 @@ export default class App extends Component {
 
   getGreetings = m => {
     let g = undefined;
-
     if (!m || !m.isValid()) {
       return;
     }
@@ -162,7 +85,6 @@ export default class App extends Component {
     // let obj = {};
     // obj[keyStore] = JSON.stringify(data);
     // chrome.storage.sync.set(obj, () => {
-    //   //console.log("UPDATE DATA", obj);
     //   if (chrome.runtime.error) {
     //     console.log("Runtime error.");
     //   }
@@ -170,8 +92,7 @@ export default class App extends Component {
   };
 
   onAddNew = newNotes => {
-    const { key, notes } = this.state;
-
+    const { notes } = this.state;
     const newId = Math.max.apply(null, notes.map(t => t.id)) + 1;
 
     this.setState({
@@ -185,10 +106,10 @@ export default class App extends Component {
         ...notes
       ],
       dataEdit: "",
+      isEdit: false,
       isAnimate: true
     });
-
-    this.updateStore(key, notes);
+    this.updateStore(STORAGE_KEY, notes);
   };
 
   onEditCard = (cardId, cardContent) => {
@@ -196,65 +117,76 @@ export default class App extends Component {
       isEdit: true,
       dataEdit: cardContent
     });
-
     this.onDeleteCard(cardId);
   };
 
   onDeleteCard = cardId => {
-    const { key, notes } = this.state;
+    const { notes } = this.state;
 
     this.setState({
       notes: notes.filter(c => c.id !== cardId)
     });
 
-    this.updateStore(key, notes);
+    this.updateStore(STORAGE_KEY, notes);
+  };
+
+  onCompleteCard = cardId => {
+    const { notes } = this.state;
+
+    this.setState({
+      isAnimate: false
+    });
+
+    notes.forEach(item => {
+      if (item.id === cardId) {
+        item.isShown = !item.isShown;
+      }
+    });
+
+    this.updateStore(STORAGE_KEY, notes);
   };
 
   onSortEnd = ({ oldIndex, newIndex }) => {
-    const { key, notes } = this.state;
+    const { notes } = this.state;
 
     this.setState({
       isAnimate: false,
       notes: arrayMove(notes, oldIndex, newIndex)
     });
-
-    this.updateStore(key, notes);
+    this.updateStore(STORAGE_KEY, notes);
   };
 
   render() {
     const { notes, isEdit, dataEdit, isAnimate } = this.state;
-
-    const currentDate = moment().format("dddd, D MMMM");
+    const currentDate = moment().format("dddd, D MMMM YYYY");
     const greetingWord = this.getGreetings(moment());
 
     console.log("NOTES: ", notes);
-    console.log("DATA EDIT: ", dataEdit);
 
     return (
       <Wrapper>
-        <Welcome>{`Good ${greetingWord}, its ${currentDate}. Stay awesome!`}</Welcome>
+        <Welcome>{`Good ${greetingWord}, its ${currentDate}. Keep rockin!`}</Welcome>
         <NotesInput
           onSet={this.onAddNew}
           isEdit={isEdit}
           dataEdit={dataEdit}
           isAnimate={isAnimate}
         />
-        <Title>
-          {notes.length !== 0
-            ? `What's on your thoughts`
-            : `Write something in your mind`}
-        </Title>
         <NotesCard
           data={notes}
           onSortEnd={this.onSortEnd}
           onDeleteCard={this.onDeleteCard}
           onEditCard={this.onEditCard}
+          onCompleteCard={this.onCompleteCard}
           isAnimate={isAnimate}
           useDragHandle
           useWindowAsScrollContainer
         />
         <CreateBy>
-          Another thing from <a href="https://ahmadzakiy.com/">Zakiy</a>
+          Another thing from{" "}
+          <a href="https://ahmadzakiy.com/?utm_source=xnotes&utm_medium=footer">
+            Zakiy
+          </a>
         </CreateBy>
       </Wrapper>
     );
@@ -266,17 +198,14 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 10px;
+  min-height: 100vh;
+  color: #232323;
+  background: #f1f3f5;
 `;
 
 const Welcome = styled.span`
-  padding: 10px 0;
+  padding: 20px 0;
   font-size: 16px;
-`;
-
-const Title = styled.div`
-  margin-top: 20px;
-  padding: 10px 0;
-  font-size: 14px;
 `;
 
 const CreateBy = styled.div`
