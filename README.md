@@ -1,6 +1,6 @@
 # :ledger:xNotes
 
-#### v.1.3.2
+#### v.2.0.0
 
 ### An app to write notes on chrome new tab
 
@@ -9,35 +9,57 @@
 to develop xnotes
 
 ```
-clone this repo
-npm install / yarn install
-npm start / yarn start
+- clone this repo
+- npm install / yarn install
+- npm start / yarn start
 ```
 
 to build chrome extension
 
 ```
-uncomment chrome.storage function at app.js
-npm run build
-load build folder from chrome browser
+- uncomment getStore and setStore function at app.js
+- npm run build
+- load build folder from chrome browser
 ```
 
-#### Tech Stack
+#### STACK
 
-- `ReactJS`: UI Library
+- `create-react-app`: React boilerplate
 - `styled-component`: CSS in JS
 - `AOS JS` : Animation Library
 - `Moment JS` : Datetime Library
 - `react-sortable-hoc` : Sortable Library
+- `react-toggle` : Toggle component
+- `font-awesome` : Icons
 
 #### LOG
 
-v1.0.0
+v2.0.0
 
 ```
-- add note
-- delete note
-- move card
+- refactor code and change folder structure
+- change add new note to "cmd + enter" instead of "enter + shift" keyword
+- change delete, move, edit button with icons
+- window scrollable sort
+- add theming provider
+- add note's filter
+```
+
+v1.3.2
+
+```
+- cleaning code
+- change add new note from "enter" keyword to "enter + shift" keyword
+- add animation
+- change copywrite welcoming card
+
+```
+
+v1.2.1
+
+```
+- fixing bug move card
+- add storybookJS
 ```
 
 v1.1.0
@@ -48,34 +70,10 @@ v1.1.0
 - welcoming note
 ```
 
-v1.1.1
+v1.0.0
 
 ```
-- fixing bug
-```
-
-v1.2.0
-
-```
-- add animation
-```
-
-v1.2.1
-
-```
-- change copywrite welcoming card
-```
-
-v1.3.1
-
-```
-- fixing bug move card
-- add storybookJS
-```
-
-v1.3.2
-
-```
-- cleaning code
-- change add new note from "enter" keyword to "enter + shift" keyword
+- add note
+- delete note
+- move card
 ```

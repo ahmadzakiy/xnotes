@@ -1,25 +1,24 @@
 import React, { Component } from "react";
-import styled from "styled-components";
+import styled, { ThemeProvider } from "styled-components";
 import moment from "moment";
 import { arrayMove } from "react-sortable-hoc";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import {
+  STORAGE_KEY,
+  WELCOME_NOTE,
+  THEME_STORAGE_KEY,
+  THEME_DARK,
+  THEME_LIGHT
+} from "./static";
 
 // Components
+import Toggle from "react-toggle";
 import NotesInput from "./components/NotesInput";
 import NotesCard from "./components/NotesCard";
 
-const STORAGE_KEY = "modernlifeiswar";
-const WELCOME_NOTE = `Hi, 
-
-Thank you for using xNotes, here are some useful tips for you: 
-- To add a note, just hit the 'save' button or hold 'shift' then press 'enter' 
-- To add a new line, just press 'enter' 
-- To move your card, point your mouse to the 'move' text and then drag the card 
-- To edit your card, click the 'edit' text 
-- To delete your card, click the 'x' button 
-                  
-Now you're ready to write your first note. Enjoy!`;
+// CSS
+import "./css/toggle.css";
 
 export default class App extends Component {
   state = {
@@ -33,10 +32,16 @@ export default class App extends Component {
     ],
     dataEdit: "",
     isEdit: false,
-    isAnimate: false
+    isAnimate: false,
+    isLightTheme: true
   };
 
   componentDidMount() {
+    console.log("just love the world that won't love you back~");
+    // this.setState({
+    //   isLightTheme: localStorage.getItem("theme") === "light" ? true : false
+    // });
+    this.getStore(THEME_STORAGE_KEY);
     this.getStore(STORAGE_KEY);
     AOS.init({
       offset: 0,
@@ -45,57 +50,42 @@ export default class App extends Component {
       delay: 100,
       once: false
     });
-
-    console.log("just love the world that won't love you back~");
   }
 
-  getGreetings = m => {
-    let g = undefined;
-    if (!m || !m.isValid()) {
-      return;
-    }
-
-    const split_afternoon = 12;
-    const split_evening = 17;
-    const currentHour = parseFloat(m.format("HH"));
-
-    if (currentHour >= split_afternoon && currentHour <= split_evening) {
-      g = "afternoon";
-    } else if (currentHour >= split_evening) {
-      g = "evening";
-    } else {
-      g = "morning";
-    }
-
-    return g;
-  };
-
   getStore = keyStore => {
-    // chrome.storage.sync.get(keyStore, result => {
-    //   if (!chrome.runtime.error) {
-    //     let data = JSON.parse(result[keyStore]);
-    //     this.setState({
-    //       notes: data
-    //     });
-    //   }
-    // });
+    chrome.storage.sync.get(keyStore, result => {
+      if (!chrome.runtime.error) {
+        let data = JSON.parse(result[keyStore]);
+        console.log("get", data);
+        if (STORAGE_KEY) {
+          this.setState({
+            notes: data
+          });
+        } else if (THEME_STORAGE_KEY) {
+          this.setState({
+            isLightTheme: data === "light" ? true : false
+          });
+        }
+      }
+    });
   };
 
-  updateStore = (keyStore, data) => {
-    // let obj = {};
-    // obj[keyStore] = JSON.stringify(data);
-    // chrome.storage.sync.set(obj, () => {
-    //   if (chrome.runtime.error) {
-    //     console.log("Runtime error.");
-    //   }
-    // });
+  setStore = (keyStore, data) => {
+    let obj = {};
+    obj[keyStore] = JSON.stringify(data);
+    console.log("set", obj);
+    chrome.storage.sync.set(obj, () => {
+      if (chrome.runtime.error) {
+        console.log("Runtime error.");
+      }
+    });
   };
 
   onAddNew = newNotes => {
     const { notes } = this.state;
     const newId = Math.max.apply(null, notes.map(t => t.id)) + 1;
-
     this.setState({
+      isAnimate: true,
       notes: [
         {
           id: newId,
@@ -106,14 +96,14 @@ export default class App extends Component {
         ...notes
       ],
       dataEdit: "",
-      isEdit: false,
-      isAnimate: true
+      isEdit: false
     });
-    this.updateStore(STORAGE_KEY, notes);
+    this.getStore(STORAGE_KEY, notes);
   };
 
   onEditCard = (cardId, cardContent) => {
     this.setState({
+      isAnimate: false,
       isEdit: true,
       dataEdit: cardContent
     });
@@ -122,73 +112,108 @@ export default class App extends Component {
 
   onDeleteCard = cardId => {
     const { notes } = this.state;
-
     this.setState({
+      isAnimate: false,
       notes: notes.filter(c => c.id !== cardId)
     });
-
-    this.updateStore(STORAGE_KEY, notes);
+    this.setStore(STORAGE_KEY, notes);
   };
 
   onCompleteCard = cardId => {
     const { notes } = this.state;
-
     this.setState({
       isAnimate: false
     });
-
     notes.forEach(item => {
       if (item.id === cardId) {
         item.isShown = !item.isShown;
       }
     });
-
-    this.updateStore(STORAGE_KEY, notes);
+    this.setStore(STORAGE_KEY, notes);
   };
 
   onSortEnd = ({ oldIndex, newIndex }) => {
     const { notes } = this.state;
-
     this.setState({
       isAnimate: false,
       notes: arrayMove(notes, oldIndex, newIndex)
     });
-    this.updateStore(STORAGE_KEY, notes);
+    this.setStore(STORAGE_KEY, notes);
+  };
+
+  handleGreetings = m => {
+    let g = undefined;
+    if (!m || !m.isValid()) {
+      return;
+    }
+    const split_afternoon = 12;
+    const split_evening = 17;
+    const currentHour = parseFloat(m.format("HH"));
+    if (currentHour >= split_afternoon && currentHour <= split_evening) {
+      g = "afternoon";
+    } else if (currentHour >= split_evening) {
+      g = "evening";
+    } else {
+      g = "morning";
+    }
+    return g;
+  };
+
+  handleThemeChange = async () => {
+    const { isLightTheme } = this.state;
+    this.setState({
+      isAnimate: false,
+      isLightTheme: !isLightTheme
+    });
+    this.setStore(THEME_STORAGE_KEY, isLightTheme === true ? "light" : "dark");
   };
 
   render() {
-    const { notes, isEdit, dataEdit, isAnimate } = this.state;
+    const { notes, isEdit, dataEdit, isAnimate, isLightTheme } = this.state;
     const currentDate = moment().format("dddd, D MMMM YYYY");
-    const greetingWord = this.getGreetings(moment());
+    const greetingWord = this.handleGreetings(moment());
+
+    // localStorage.setItem("theme", isLightTheme === true ? "light" : "dark");
+
+    console.log("isLightTheme", isLightTheme);
 
     console.log("NOTES: ", notes);
 
     return (
-      <Wrapper>
-        <Welcome>{`Good ${greetingWord}, its ${currentDate}. Keep rockin!`}</Welcome>
-        <NotesInput
-          onSet={this.onAddNew}
-          isEdit={isEdit}
-          dataEdit={dataEdit}
-          isAnimate={isAnimate}
-        />
-        <NotesCard
-          data={notes}
-          onSortEnd={this.onSortEnd}
-          onDeleteCard={this.onDeleteCard}
-          onEditCard={this.onEditCard}
-          onCompleteCard={this.onCompleteCard}
-          isAnimate={isAnimate}
-          useDragHandle
-          useWindowAsScrollContainer
-        />
-        <CreateBy>
-          Another thing from{" "}
-          <a href="https://ahmadzakiy.com/?utm_source=xnotes&utm_medium=footer">
-            Zakiy
-          </a>
-        </CreateBy>
-      </Wrapper>
+      <ThemeProvider theme={isLightTheme ? THEME_LIGHT : THEME_DARK}>
+        <Wrapper>
+          <Welcome>{`Good ${greetingWord}, its ${currentDate}. Keep rockin!`}</Welcome>
+          <ChangeTheme>
+            <Toggle
+              defaultChecked={isLightTheme}
+              onChange={this.handleThemeChange}
+              icons={false}
+            />
+          </ChangeTheme>
+          <NotesInput
+            onSet={this.onAddNew}
+            isEdit={isEdit}
+            dataEdit={dataEdit}
+            isAnimate={isAnimate}
+          />
+          <NotesCard
+            data={notes}
+            onSortEnd={this.onSortEnd}
+            onDeleteCard={this.onDeleteCard}
+            onEditCard={this.onEditCard}
+            onCompleteCard={this.onCompleteCard}
+            isAnimate={isAnimate}
+            useDragHandle
+            useWindowAsScrollContainer
+          />
+          <CreateBy>
+            Another thing from{" "}
+            <a href="https://ahmadzakiy.com/?utm_source=xnotes&utm_medium=footer">
+              Zakiy
+            </a>
+          </CreateBy>
+        </Wrapper>
+      </ThemeProvider>
     );
   }
 }
@@ -199,8 +224,11 @@ const Wrapper = styled.div`
   align-items: center;
   padding: 10px;
   min-height: 100vh;
-  color: #232323;
-  background: #f1f3f5;
+
+  ${props => `
+    background: ${props.theme.background};
+    color: ${props.theme.text};
+    `}
 `;
 
 const Welcome = styled.span`
@@ -208,9 +236,23 @@ const Welcome = styled.span`
   font-size: 16px;
 `;
 
-const CreateBy = styled.div`
+const CreateBy = styled.span`
   position: fixed;
   bottom: 10px;
   right: 10px;
-  font-size: 10px;
+  font-size: 12px;
+  color: #b7b7b7;
+
+  a {
+    ${props => `
+    color: ${props.theme.text};
+    `}
+  }
+`;
+
+const ChangeTheme = styled.div`
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  font-size: 18px;
 `;

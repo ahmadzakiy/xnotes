@@ -1,16 +1,11 @@
 {
-  "name": "xnotes",
-  "version": "1.3.2",
+  "name": "xNotes",
+  "version": "2.0.0",
+  "description": "an app to write notes on chrome new tab",
   "private": true,
-  "dependencies": {
-    "aos": "^2.2.0",
-    "moment": "^2.21.0",
-    "prop-types": "^15.6.0",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
-    "react-scripts": "1.1.0",
-    "react-sortable-hoc": "^1.4.0",
-    "styled-components": "^3.1.4"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ahmadzakiy/xnotes"
   },
   "scripts": {
     "start": "PORT=3006 react-scripts start",
@@ -20,6 +15,17 @@
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public"
   },
+  "dependencies": {
+    "aos": "^2.2.0",
+    "moment": "^2.21.0",
+    "prop-types": "^15.6.0",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-scripts": "1.1.0",
+    "react-sortable-hoc": "^1.4.0",
+    "react-toggle": "^4.0.2",
+    "styled-components": "^3.1.4"
+  },
   "devDependencies": {
     "@storybook/addon-actions": "^3.3.12",
     "@storybook/addon-info": "^3.4.6",
@@ -28,5 +34,16 @@
     "@storybook/addons": "^3.3.12",
     "@storybook/react": "^3.3.12",
     "babel-core": "^6.26.0"
-  }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ],
+  "author": {
+    "name": "Ahmad Zakiy",
+    "email": "hello@ahmadzakiy.com",
+    "url": "https://ahmadzakiy.com"
+  },
+  "license": "MIT"
 }

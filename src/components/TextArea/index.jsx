@@ -49,6 +49,7 @@ const Wrapper = styled.textarea`
     width: ${props.width}px;
     font-size: ${props.fontSize}px;
     border-radius: ${props.borderRadius}px;
+    background: ${props.theme.textarea};
   `}
 
   font-family: inherit;
@@ -56,7 +57,6 @@ const Wrapper = styled.textarea`
   padding: 20px;
   line-height: 20px;
   border: 1px solid rgba(0, 0, 0, 0.1);
-  background: #f7f7f7;
   box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.1);
   transition: 0.3s;
 

@@ -27,7 +27,6 @@ class SortableItem extends Component {
     const { isAnimate } = this.props;
 
     if (prevIsAnimate !== isAnimate) {
-      console.log("masuk");
       this.setState({
         isShowBtn: false
       });
@@ -92,8 +91,6 @@ const Card = styled.div`
   width: 500px;
   border-radius: 8px;
   margin: 10px 0;
-  background: #ffffff;
-  border: 1px solid #ffffff;
   padding: 20px;
   font-size: 12px;
   word-wrap: break-word;
@@ -101,8 +98,10 @@ const Card = styled.div`
   line-height: 20px;
   box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.1);
 
-  ${props =>
-    `text-decoration: ${props.isNotCompleted ? "normal" : "line-through"};`}
+  ${props => `
+    text-decoration: ${props.isNotCompleted ? "normal" : "line-through"};
+    background: ${props.theme.card}
+    `}
 
   :hover {
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
@@ -115,6 +114,9 @@ const ButtonWrapper = styled.div`
   position: absolute;
   right: 10px;
   top: 20px;
+  background: #ffffff;
+  padding: 4px 8px;
+  border-radius: 8px;
 `;
 
 const IconImg = styled.img`
@@ -122,7 +124,10 @@ const IconImg = styled.img`
   width: 14px;
   height: 14px;
   margin-left: 10px;
-  color: pink;
+
+  &:first-child {
+    margin-left: 0;
+  }
 `;
 
 export default SortableElement(SortableItem);
