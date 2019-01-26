@@ -37,10 +37,6 @@ export default class App extends Component {
   };
 
   componentDidMount() {
-    console.log("just love the world that won't love you back~");
-    // this.setState({
-    //   isLightTheme: localStorage.getItem("theme") === "light" ? true : false
-    // });
     this.getStore(THEME_STORAGE_KEY);
     this.getStore(STORAGE_KEY);
     AOS.init({
@@ -53,15 +49,16 @@ export default class App extends Component {
   }
 
   getStore = keyStore => {
-    chrome.storage.sync.get(keyStore, result => {
-      if (!chrome.runtime.error) {
+    // eslint-disable-line
+    window.chrome.storage.sync.get(keyStore, result => {
+      if (!window.chrome.runtime.error) {
         let data = JSON.parse(result[keyStore]);
-        console.log("get", data);
-        if (STORAGE_KEY) {
+        console.log("GET STORAGE: ", data);
+        if (keyStore === STORAGE_KEY) {
           this.setState({
             notes: data
           });
-        } else if (THEME_STORAGE_KEY) {
+        } else if (keyStore === THEME_STORAGE_KEY) {
           this.setState({
             isLightTheme: data === "light" ? true : false
           });
@@ -73,9 +70,9 @@ export default class App extends Component {
   setStore = (keyStore, data) => {
     let obj = {};
     obj[keyStore] = JSON.stringify(data);
-    console.log("set", obj);
-    chrome.storage.sync.set(obj, () => {
-      if (chrome.runtime.error) {
+    // console.log("SET STORAGE: ", data);
+    window.chrome.storage.sync.set(obj, () => {
+      if (window.chrome.runtime.error) {
         console.log("Runtime error.");
       }
     });
@@ -83,27 +80,32 @@ export default class App extends Component {
 
   onAddNew = newNotes => {
     const { notes } = this.state;
-    const newId = Math.max.apply(null, notes.map(t => t.id)) + 1;
-    this.setState({
-      isAnimate: true,
-      notes: [
-        {
-          id: newId,
-          dateCreated: moment().format("DD/MM/YYYY"),
-          content: newNotes,
-          isShown: true
-        },
-        ...notes
-      ],
-      dataEdit: "",
-      isEdit: false
-    });
-    this.getStore(STORAGE_KEY, notes);
+    const newId =
+      notes.length !== 0 ? Math.max.apply(null, notes.map(t => t.id)) + 1 : 1;
+    this.setState(
+      {
+        isAnimate: true,
+        notes: [
+          {
+            id: newId,
+            dateCreated: moment().format("DD/MM/YYYY"),
+            content: newNotes,
+            isShown: true
+          },
+          ...notes
+        ],
+        dataEdit: "",
+        isEdit: false
+      },
+      () => {
+        this.setState({ isAnimate: false });
+        this.setStore(STORAGE_KEY, this.state.notes);
+      }
+    );
   };
 
   onEditCard = (cardId, cardContent) => {
     this.setState({
-      isAnimate: false,
       isEdit: true,
       dataEdit: cardContent
     });
@@ -112,18 +114,16 @@ export default class App extends Component {
 
   onDeleteCard = cardId => {
     const { notes } = this.state;
-    this.setState({
-      isAnimate: false,
-      notes: notes.filter(c => c.id !== cardId)
-    });
-    this.setStore(STORAGE_KEY, notes);
+    this.setState(
+      {
+        notes: notes.filter(c => c.id !== cardId)
+      },
+      () => this.setStore(STORAGE_KEY, this.state.notes)
+    );
   };
 
   onCompleteCard = cardId => {
     const { notes } = this.state;
-    this.setState({
-      isAnimate: false
-    });
     notes.forEach(item => {
       if (item.id === cardId) {
         item.isShown = !item.isShown;
@@ -134,11 +134,12 @@ export default class App extends Component {
 
   onSortEnd = ({ oldIndex, newIndex }) => {
     const { notes } = this.state;
-    this.setState({
-      isAnimate: false,
-      notes: arrayMove(notes, oldIndex, newIndex)
-    });
-    this.setStore(STORAGE_KEY, notes);
+    this.setState(
+      {
+        notes: arrayMove(notes, oldIndex, newIndex)
+      },
+      () => this.setStore(STORAGE_KEY, this.state.notes)
+    );
   };
 
   handleGreetings = m => {
@@ -161,11 +162,16 @@ export default class App extends Component {
 
   handleThemeChange = async () => {
     const { isLightTheme } = this.state;
-    this.setState({
-      isAnimate: false,
-      isLightTheme: !isLightTheme
-    });
-    this.setStore(THEME_STORAGE_KEY, isLightTheme === true ? "light" : "dark");
+    this.setState(
+      {
+        isLightTheme: !isLightTheme
+      },
+      () =>
+        this.setStore(
+          THEME_STORAGE_KEY,
+          this.state.isLightTheme === true ? "light" : "dark"
+        )
+    );
   };
 
   render() {
@@ -173,16 +179,10 @@ export default class App extends Component {
     const currentDate = moment().format("dddd, D MMMM YYYY");
     const greetingWord = this.handleGreetings(moment());
 
-    // localStorage.setItem("theme", isLightTheme === true ? "light" : "dark");
-
-    console.log("isLightTheme", isLightTheme);
-
-    console.log("NOTES: ", notes);
-
     return (
       <ThemeProvider theme={isLightTheme ? THEME_LIGHT : THEME_DARK}>
         <Wrapper>
-          <Welcome>{`Good ${greetingWord}, its ${currentDate}. Keep rockin!`}</Welcome>
+          <Welcome>{`Good ${greetingWord}, its ${currentDate}. Keep Rocks!`}</Welcome>
           <ChangeTheme>
             <Toggle
               defaultChecked={isLightTheme}

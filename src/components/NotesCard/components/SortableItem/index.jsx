@@ -22,21 +22,12 @@ class SortableItem extends Component {
     isShowBtn: false
   };
 
-  componentDidUpdate(prevProps) {
-    const { isAnimate: prevIsAnimate } = prevProps;
-    const { isAnimate } = this.props;
+  handleMouseEnter = () => {
+    this.setState({ isShowBtn: true });
+  };
 
-    if (prevIsAnimate !== isAnimate) {
-      this.setState({
-        isShowBtn: false
-      });
-    }
-  }
-
-  handleShowButton = () => {
-    const { isShowBtn } = this.state;
-
-    this.setState({ isShowBtn: !isShowBtn });
+  handleMouseLeave = () => {
+    this.setState({ isShowBtn: false });
   };
 
   render() {
@@ -52,8 +43,8 @@ class SortableItem extends Component {
 
     return (
       <Wrapper
-        onMouseEnter={this.handleShowButton}
-        onMouseLeave={this.handleShowButton}
+        onMouseEnter={this.handleMouseEnter}
+        onMouseLeave={this.handleMouseLeave}
       >
         <Card
           data-aos={isAnimate ? "fade-right" : ""}

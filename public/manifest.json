@@ -5,13 +5,11 @@
   "short_name": "xNotes",
   "description": "An app to write notes on chrome new tab.",
   "homepage_url": "https://github.com/ahmadzakiy/xnotes",
-  "icons": [
-    {
-      "16": "./img/icon16.png",
-      "48": "./img/icon48.png",
-      "128": "./img/icon128.png"
-    }
-  ],
+  "icons": {
+    "16": "./img/icon16.png",
+    "48": "./img/icon48.png",
+    "128": "./img/icon128.png"
+  },
   "chrome_url_overrides": {
     "newtab": "index.html"
   },
