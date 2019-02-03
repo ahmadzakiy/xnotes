@@ -52,7 +52,6 @@ v1.3.2
 - change add new note from "enter" keyword to "enter + shift" keyword
 - add animation
 - change copywrite welcoming card
-
 ```
 
 v1.2.1

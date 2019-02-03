@@ -92,6 +92,7 @@ const Card = styled.div`
   ${props => `
     text-decoration: ${props.isNotCompleted ? "normal" : "line-through"};
     background: ${props.theme.card}
+    opacity: ${props.isNotCompleted ? "1" : "0.3"}
     `}
 
   :hover {
@@ -104,20 +105,25 @@ const ButtonWrapper = styled.div`
   flex-direction: row;
   position: absolute;
   right: 10px;
-  top: 20px;
+  top: 0px;
   background: #ffffff;
-  padding: 4px 8px;
+  padding: 4px 16px;
   border-radius: 8px;
+  box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.1);
 `;
 
 const IconImg = styled.img`
   cursor: pointer;
   width: 14px;
   height: 14px;
-  margin-left: 10px;
+  margin-left: 16px;
 
   &:first-child {
     margin-left: 0;
+  }
+
+  &:last-child {
+    cursor: all-scroll;
   }
 `;
 

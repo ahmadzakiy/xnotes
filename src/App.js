@@ -4,13 +4,14 @@ import moment from "moment";
 import { arrayMove } from "react-sortable-hoc";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import Modal from 'react-responsive-modal';
 import {
   STORAGE_KEY,
   WELCOME_NOTE,
   THEME_STORAGE_KEY,
   THEME_DARK,
   THEME_LIGHT
-} from "./static";
+} from "./constant";
 
 // Components
 import Toggle from "react-toggle";
@@ -33,7 +34,8 @@ export default class App extends Component {
     dataEdit: "",
     isEdit: false,
     isAnimate: false,
-    isLightTheme: true
+    isLightTheme: true,
+      showModal: false,
   };
 
   componentDidMount() {
@@ -60,7 +62,7 @@ export default class App extends Component {
           });
         } else if (keyStore === THEME_STORAGE_KEY) {
           this.setState({
-            isLightTheme: data === "light" ? true : false
+            isLightTheme: data === "light"
           });
         }
       }
@@ -160,7 +162,7 @@ export default class App extends Component {
     return g;
   };
 
-  handleThemeChange = async () => {
+  handleThemeChange = () => {
     const { isLightTheme } = this.state;
     this.setState(
       {
@@ -174,15 +176,23 @@ export default class App extends Component {
     );
   };
 
+  handleShowModal = () => {
+    const {showModal} = this.state;
+
+    this.setState({
+        showModal: !showModal
+    })
+  };
+
   render() {
-    const { notes, isEdit, dataEdit, isAnimate, isLightTheme } = this.state;
+    const { notes, isEdit, dataEdit, isAnimate, isLightTheme, showModal } = this.state;
     const currentDate = moment().format("dddd, D MMMM YYYY");
     const greetingWord = this.handleGreetings(moment());
 
     return (
       <ThemeProvider theme={isLightTheme ? THEME_LIGHT : THEME_DARK}>
         <Wrapper>
-          <Welcome>{`Good ${greetingWord}, its ${currentDate}. Keep Rocks!`}</Welcome>
+          <Welcome>{`Good ${greetingWord}, its ${currentDate}, and stay Awesome!`}</Welcome>
           <ChangeTheme>
             <Toggle
               defaultChecked={isLightTheme}
@@ -207,11 +217,25 @@ export default class App extends Component {
             useWindowAsScrollContainer
           />
           <CreateBy>
-            Another thing from{" "}
-            <a href="https://ahmadzakiy.com/?utm_source=xnotes&utm_medium=footer">
-              Zakiy
-            </a>
+              <span onClick={this.handleShowModal}>How to use</span>
+            <span>
+              Another thing from <a href="https://ahmadzakiy.com/?utm_source=xnotes&utm_medium=footer">Zakiy</a>
+            </span>
           </CreateBy>
+          <Modal open={showModal} onClose={this.handleShowModal} center>
+              <HelpCenter>
+                  <h1>Hi,</h1>
+                  <p>Thank you for using xNotes, here are some useful tips for you:</p>
+                  <ul>
+                      <li>To add a note, just click the <b>'save button'</b> or hit <b>'cmd + enter'</b></li>
+                      <li>To add a new line, just hit <b>'enter'</b></li>
+                      <li>To move your card, click the <b>'arrow icon'</b> and then drag</li>
+                      <li>To edit your card, click the <b>'pencil icon'</b></li>
+                      <li>To delete your card, click the <b>'trash icon'</b></li>
+                      <li>To complete your note, click the <b>'check icon'</b> and vice versa</li>
+                  </ul>
+              </HelpCenter>
+          </Modal>
         </Wrapper>
       </ThemeProvider>
     );
@@ -237,13 +261,24 @@ const Welcome = styled.span`
 `;
 
 const CreateBy = styled.span`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   position: fixed;
   bottom: 10px;
-  right: 10px;
   font-size: 12px;
-  color: #b7b7b7;
+  line-height: 2;
+  
+  span {
+    padding: 0 20px;
+  
+    &:first-child {
+      cursor: pointer;
+    }
+  }
 
-  a {
+  span, a {
     ${props => `
     color: ${props.theme.text};
     `}
@@ -255,4 +290,9 @@ const ChangeTheme = styled.div`
   top: 10px;
   right: 10px;
   font-size: 18px;
+`;
+
+const HelpCenter = styled.div`
+  padding: 10px;
+  line-height: 1.5;
 `;
