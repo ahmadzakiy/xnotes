@@ -52,32 +52,32 @@ export default class App extends Component {
 
   getStore = keyStore => {
     // eslint-disable-line
-    window.chrome.storage.sync.get(keyStore, result => {
-      if (!window.chrome.runtime.error) {
-        let data = JSON.parse(result[keyStore]);
-        console.log("GET STORAGE: ", data);
-        if (keyStore === STORAGE_KEY) {
-          this.setState({
-            notes: data
-          });
-        } else if (keyStore === THEME_STORAGE_KEY) {
-          this.setState({
-            isLightTheme: data === "light"
-          });
-        }
-      }
-    });
+    // window.chrome.storage.sync.get(keyStore, result => {
+    //   if (!window.chrome.runtime.error) {
+    //     let data = JSON.parse(result[keyStore]);
+    //     //console.log("GET STORAGE: ", data);
+    //     if (keyStore === STORAGE_KEY) {
+    //       this.setState({
+    //         notes: data
+    //       });
+    //     } else if (keyStore === THEME_STORAGE_KEY) {
+    //       this.setState({
+    //         isLightTheme: data === "light"
+    //       });
+    //     }
+    //   }
+    // });
   };
 
   setStore = (keyStore, data) => {
-    let obj = {};
-    obj[keyStore] = JSON.stringify(data);
-    // console.log("SET STORAGE: ", data);
-    window.chrome.storage.sync.set(obj, () => {
-      if (window.chrome.runtime.error) {
-        console.log("Runtime error.");
-      }
-    });
+    // let obj = {};
+    // obj[keyStore] = JSON.stringify(data);
+    // // console.log("SET STORAGE: ", data);
+    // window.chrome.storage.sync.set(obj, () => {
+    //   if (window.chrome.runtime.error) {
+    //     console.log("Runtime error.");
+    //   }
+    // });
   };
 
   onAddNew = newNotes => {
@@ -97,10 +97,9 @@ export default class App extends Component {
           ...notes
         ],
         dataEdit: "",
-        isEdit: false
+        isEdit: false,
       },
       () => {
-        this.setState({ isAnimate: false });
         this.setStore(STORAGE_KEY, this.state.notes);
       }
     );

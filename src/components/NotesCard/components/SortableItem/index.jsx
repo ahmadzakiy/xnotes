@@ -41,31 +41,34 @@ class SortableItem extends Component {
     const { isShowBtn } = this.state;
     const DragHandle = SortableHandle(() => <IconImg src={arrows} />);
 
+    console.log('isAnimate', isAnimate);
+
     return (
       <Wrapper
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
       >
-        <Card
-          data-aos={isAnimate ? "fade-right" : ""}
-          isNotCompleted={item.isShown}
-        >
-          {item.content}
-        </Card>
-        {isShowBtn && (
-          <ButtonWrapper>
-            <IconImg src={trash} onClick={() => onDeleteCard(item.id)} />
-            <IconImg
-              src={pencil}
-              onClick={() => onEditCard(item.id, item.content)}
-            />
-            <IconImg
-              src={item.isShown ? check : uncheck}
-              onClick={() => onCompleteCard(item.id)}
-            />
-            <DragHandle />
-          </ButtonWrapper>
-        )}
+        <div data-aos={isAnimate ? "fade-right" : ""}>
+          <Card
+              isNotCompleted={item.isShown}
+          >
+              {item.content}
+          </Card>
+          {isShowBtn && (
+            <ButtonWrapper>
+              <IconImg src={trash} onClick={() => onDeleteCard(item.id)} />
+              <IconImg
+                  src={pencil}
+                  onClick={() => onEditCard(item.id, item.content)}
+              />
+              <IconImg
+                  src={item.isShown ? check : uncheck}
+                  onClick={() => onCompleteCard(item.id)}
+              />
+              <DragHandle />
+            </ButtonWrapper>
+          )}
+        </div>
       </Wrapper>
     );
   }
