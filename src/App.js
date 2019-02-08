@@ -226,7 +226,7 @@ export default class App extends Component {
                   <h1>Hi,</h1>
                   <p>Thank you for using xNotes, here are some useful tips for you:</p>
                   <ul>
-                      <li>To add a note, just click the <b>'save button'</b> or hit <b>'cmd + enter'</b></li>
+                      <li>To add a note, just click the <b>'save button'</b> or hit <b>'alt/option + enter'</b></li>
                       <li>To add a new line, just hit <b>'enter'</b></li>
                       <li>To move your card, click the <b>'arrow icon'</b> and then drag</li>
                       <li>To edit your card, click the <b>'pencil icon'</b></li>

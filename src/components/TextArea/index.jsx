@@ -30,13 +30,13 @@ export default class TextArea extends PureComponent {
   onKeyDown = e => {
     const { onShiftEnter } = this.props;
 
-    if (e.metaKey && e.keyCode === 13) {
+    if (e.altKey && e.keyCode === 13) {
       onShiftEnter();
     }
   };
 
   render() {
-    const { onChange, onKeyDown, ...props } = this.props;
+    const { ...props } = this.props;
 
     return (
       <Wrapper {...props} onChange={this.onChange} onKeyDown={this.onKeyDown} />

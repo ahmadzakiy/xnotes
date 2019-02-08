@@ -1,6 +1,6 @@
 # :ledger:xNotes
 
-#### v.2.0.0
+#### v.2.0.1
 
 ### An app to write notes on chrome new tab
 
@@ -33,6 +33,12 @@ to build chrome extension
 - `font-awesome` : Icons
 
 #### LOG
+
+v2.0.1
+
+```
+- change add new note to "alt/option + enter" instead of "cmd + shift" keyword
+```
 
 v2.0.0
 

@@ -2,7 +2,7 @@ export const STORAGE_KEY = "modernlifeiswar";
 export const WELCOME_NOTE = `Hi, 
 
 Thank you for using xNotes, here are some useful tips for you: 
-- To add a note, just hit the 'save' button or 'cmd + enter' 
+- To add a note, just hit the 'save' button or 'alt/option + enter' 
 - To add a new line, just hit 'enter' 
 - To move your card, click the 'arrow' icon and then drag
 - To edit your card, click the 'pencil' icon 
