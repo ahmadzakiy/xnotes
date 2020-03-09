@@ -1,5 +1,5 @@
 # :ledger: xNotes
-This a Chrome Extension for write notes on new tab. use ChromeStorage API to save note and available in dark theme. install via [Chrome Store](https://chrome.google.com/webstore/detail/xnotes/kdcjpeakcckhecgojnbjiohjnbfkgmie) 
+This a Chrome Extension for write notes on new tab. use chrome.storage API to save note and available in dark theme. install via [Chrome Store](https://chrome.google.com/webstore/detail/xnotes/kdcjpeakcckhecgojnbjiohjnbfkgmie) 
 
 _Have a question ? hit me up at in.zakiy@gmail.com_
 
@@ -23,12 +23,13 @@ Develop
     yarn start
     ```
 
-Build Chrom Extension
+Build and Test Chrome Extension
 
 - un-comment `getStore` and `setStore` function at `app.js`
 - `yarn build`
-- load build folder from chrome browser
+- load built folder from `chrome://extensions/`
 
+---
 
 ### Log
 
