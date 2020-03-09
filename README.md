@@ -1,38 +1,36 @@
-# :ledger:xNotes
+# :ledger: xNotes
+This a Chrome Extension for write notes on new tab. use ChromeStorage API to save note and available in dark theme. install via [Chrome Store](https://chrome.google.com/webstore/detail/xnotes/kdcjpeakcckhecgojnbjiohjnbfkgmie) 
 
-#### v.2.0.1
+_Have a question ? hit me up at in.zakiy@gmail.com_
 
-### An app to write notes on chrome new tab
+### 🚀 Quick Development
 
-#### GETTING STARTED
+Develop
 
-to develop xnotes
+1.  **Clone repo**
 
-```
-- clone this repo
-- npm install / yarn install
-- npm start / yarn start
-```
+    ```sh
+    git clone https://github.com/ahmadzakiy/xblog.git
+    yarn
+    ```
 
-to build chrome extension
+1.  **Start developing**
 
-```
-- uncomment getStore and setStore function at app.js
-- npm run build
+    Navigate into your new site’s directory and start it up.
+
+    ```sh
+    cd xblog/
+    yarn start
+    ```
+
+Build Chrom Extension
+
+- un-comment `getStore` and `setStore` function at `app.js`
+- `yarn build`
 - load build folder from chrome browser
-```
 
-#### STACK
 
-- `create-react-app`: React boilerplate
-- `styled-component`: CSS in JS
-- `AOS JS` : Animation Library
-- `Moment JS` : Datetime Library
-- `react-sortable-hoc` : Sortable Library
-- `react-toggle` : Toggle component
-- `font-awesome` : Icons
-
-#### LOG
+### Log
 
 v2.0.1
 
